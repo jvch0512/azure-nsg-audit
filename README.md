@@ -2,6 +2,8 @@
 
 azure-nsg-audit reads the JSON from `az network nsg list` or `az network nsg show` (or an ARM export) and reports security rules that expose a workload: SSH, RDP, WinRM or SMB open to the internet, database ports open to the internet, any port from any source, very wide port ranges, rules with protocol `*`, rules without a description and unrestricted outbound allows. Findings name the NSG and the rule.
 
+![Terminal demo of azure-nsg-audit on its sample data](docs/demo.svg)
+
 **Live demo:** https://jvch0512.github.io/azure-nsg-audit/ (Synthetic data.)
 
 Visual Basic .NET on .NET 8, no packages. The demo page is rendered from the tool's `--tsv` output by `scripts/site.py` (Python 3, only needed to regenerate the page).
@@ -48,3 +50,13 @@ make test    # A VB.NET test program: every rule on good and bad NSGs, port rang
 ```
 
 MIT.
+
+## Code scanning (SARIF)
+
+`scripts/tsv2sarif.py` converts the `--tsv` output into SARIF 2.1.0, so findings show up in GitHub code scanning:
+
+```sh
+bin/azure-nsg-audit examples --tsv | python3 scripts/tsv2sarif.py --tool azure-nsg-audit --prefix examples > results.sarif
+```
+
+Upload `results.sarif` with `github/codeql-action/upload-sarif`. Severities map to SARIF levels (critical and high to error, medium to warning, low and info to note) and to a `security-severity` score.
