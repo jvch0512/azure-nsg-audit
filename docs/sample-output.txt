@@ -1,0 +1,19 @@
+3 files, 9 findings
+CRITICAL NSG001 prod-nsgs.json#nsg-open-lab/any-any
+         any-any exposes admin ports to the internet through the any-port rule
+CRITICAL NSG001 prod-nsgs.json#nsg-web-prod/allow-high-ports
+         allow-high-ports exposes admin port 3389, 5985, 5986 to the internet
+CRITICAL NSG001 prod-nsgs.json#nsg-web-prod/allow-rdp-any
+         allow-rdp-any exposes admin port 3389 to the internet
+HIGH     NSG002 prod-nsgs.json#nsg-web-prod/allow-sql
+         allow-sql exposes database port 1433 to the internet
+HIGH     NSG003 prod-nsgs.json#nsg-open-lab/any-any
+         any-any allows every port from the internet
+MEDIUM   NSG005 prod-nsgs.json#nsg-web-prod/allow-high-ports
+         allow-high-ports allows every protocol from the internet
+MEDIUM   NSG007 prod-nsgs.json#nsg-open-lab/egress-all
+         egress-all allows all outbound traffic to the internet
+LOW      NSG006 prod-nsgs.json#nsg-web-prod/allow-sql
+         allow-sql is an Allow rule with no description
+INFO     NSG000 other.json
+         no network security groups found, ignored

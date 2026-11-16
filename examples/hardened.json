@@ -1,0 +1,7 @@
+{
+  "name": "nsg-app-tier",
+  "securityRules": [
+    { "name": "from-web-tier", "priority": 100, "direction": "Inbound", "access": "Allow", "protocol": "Tcp", "sourceAddressPrefix": "10.1.0.0/24", "destinationPortRange": "8443", "description": "Web to app" },
+    { "name": "to-db-tier", "priority": 110, "direction": "Outbound", "access": "Allow", "protocol": "Tcp", "destinationAddressPrefix": "10.2.0.0/24", "destinationPortRange": "5432", "description": "App to database" }
+  ]
+}

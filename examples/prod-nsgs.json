@@ -1,0 +1,23 @@
+[
+  {
+    "name": "nsg-web-prod",
+    "securityRules": [
+      { "name": "allow-https", "priority": 100, "direction": "Inbound", "access": "Allow", "protocol": "Tcp", "sourceAddressPrefix": "Internet", "destinationPortRange": "443", "description": "Public HTTPS" },
+      { "name": "allow-rdp-any", "priority": 110, "direction": "Inbound", "access": "Allow", "protocol": "Tcp", "sourceAddressPrefix": "*", "destinationPortRange": "3389", "description": "Temporary RDP for vendor" },
+      { "name": "allow-sql", "priority": 120, "direction": "Inbound", "access": "Allow", "protocol": "Tcp", "sourceAddressPrefixes": ["203.0.113.0/24", "0.0.0.0/0"], "destinationPortRanges": ["1433", "8080"] },
+      { "name": "allow-high-ports", "priority": 130, "direction": "Inbound", "access": "Allow", "protocol": "*", "sourceAddressPrefix": "Internet", "destinationPortRange": "1024-65000", "description": "App ports" },
+      { "name": "allow-internal", "priority": 140, "direction": "Inbound", "access": "Allow", "protocol": "Tcp", "sourceAddressPrefix": "10.0.0.0/8", "destinationPortRange": "22", "description": "Admin from corp" },
+      { "name": "deny-all", "priority": 4000, "direction": "Inbound", "access": "Deny", "protocol": "*", "sourceAddressPrefix": "*", "destinationPortRange": "*" },
+      { "name": "AllowVnetInBound", "priority": 65000, "direction": "Inbound", "access": "Allow", "protocol": "*", "sourceAddressPrefix": "VirtualNetwork", "destinationPortRange": "*" }
+    ]
+  },
+  {
+    "name": "nsg-open-lab",
+    "properties": {
+      "securityRules": [
+        { "name": "any-any", "properties": { "priority": 100, "direction": "Inbound", "access": "Allow", "protocol": "*", "sourceAddressPrefix": "*", "destinationPortRange": "*", "description": "lab" } },
+        { "name": "egress-all", "properties": { "priority": 200, "direction": "Outbound", "access": "Allow", "protocol": "*", "destinationAddressPrefix": "Internet", "destinationPortRange": "*", "description": "updates" } }
+      ]
+    }
+  }
+]
